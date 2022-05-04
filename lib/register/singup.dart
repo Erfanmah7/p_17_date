@@ -17,6 +17,7 @@ class SingUp extends StatefulWidget {
 class _SingUpState extends State<SingUp> {
   late Size size;
   late String _value;
+  late String date;
   late DateTime _dateTime;
   bool flag = true;
   late TextEditingController FNconteroler;
@@ -48,7 +49,9 @@ class _SingUpState extends State<SingUp> {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
+    size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('SingUp'),
@@ -122,7 +125,8 @@ class _SingUpState extends State<SingUp> {
                       firstDate: DateTime(1925),
                       lastDate: DateTime(2050),
                     ).then((Date) {
-                      final date = Date.toString().substring(0, 11);
+                      date = Date.toString().substring(0, 11);
+                      print(date);
                       DATEconteroler.text = date;
                     });
                   },
@@ -130,7 +134,9 @@ class _SingUpState extends State<SingUp> {
                   validator: (m) {
                     if (m == '') {
                       return 'Please enter your Date of birth';
-                    } else if (DATEconteroler.text.substring(7, 11).length !=
+                    } else if (DATEconteroler.text
+                        .substring(7, 11)
+                        .length !=
                         4) {
                       return 'The entered template is incorrect';
                     } else {
@@ -230,13 +236,12 @@ class _SingUpState extends State<SingUp> {
                 ),
                 onPressed: () {
                   add();
-                  printer();
+
                   if (validation()) {
                     if (Passconteroler.text == REPassconteroler.text) {
                       Get.off(
                         homeScreen(
                           page: 'Register',
-                          birthday: DATEconteroler.text,
                         ),
                       );
                     } else {
@@ -292,25 +297,20 @@ class _SingUpState extends State<SingUp> {
     return false;
   }
 
-  //print name & family
-  void printer() {
-    var fullname = FNconteroler.text;
-    var user = USconteroler.text;
-    var pass = Passconteroler.text;
-    var date = DATEconteroler.text;
-    print('$fullname $user $pass $date');
-  }
   add() async {
+    print(date);
 
-   SharedPreferences pref =await SharedPreferences.getInstance();
+        SharedPreferences pref = await SharedPreferences.getInstance();
 
-   await pref.setString('full', FNconteroler.text);
-   await pref.setString('data', DATEconteroler.text);
-   await pref.setString('user', USconteroler.text);
+    await pref.setString('full', FNconteroler.text);
+    await pref.setString('data', DATEconteroler.text);
+    await pref.setString('user', USconteroler.text);
 
+    String datebirth = await pref.getString('data') ?? '';
+    print("hhhh  $datebirth");
 
-   if (Passconteroler.text == REPassconteroler.text) {
-     await pref.setString('pass', Passconteroler.text);
-   }
+    if (Passconteroler.text == REPassconteroler.text) {
+      await pref.setString('pass', Passconteroler.text);
+    }
   }
 }

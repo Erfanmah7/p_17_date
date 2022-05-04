@@ -113,8 +113,7 @@ class _SingInState extends State<SingIn> {
                      Get.off(
                        homeScreen(
                            page: 'Login',
-                           birthday:
-                           'frrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'),
+                        ),
                      );
 
                    }else{
@@ -171,7 +170,6 @@ class _SingInState extends State<SingIn> {
                         onTap: () {
                           Get.off(homeScreen(
                             page: 'Guest',
-                            birthday: '0',
                           ));
                         },
                         child: const Text(
